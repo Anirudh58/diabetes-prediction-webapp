@@ -16,4 +16,22 @@ def run_ui():
     # define columns for the nodes and edges csv upload widgets
     col1, col2 = st.columns([1,1])
 
-    # TODO: Add interactive widgets here to get user input (medical information)
+    # "pregnancies": 0, 
+    # "glucose" : 168, 
+    # "bloodPressure": 72, 
+    # "skinThickness": 29, 
+    # "insulin": 0, 
+    # "BMI": 28.1, 
+    # "diabetesPedigreeFunction": 0.672,
+    # "age": 59
+    with st.form('My Form'):
+        name = st.text_input('Enter your name')
+        pregnancies = st.text_input('Enter number of pregnancies')
+        glucose = st.text_input('Enter glucose levels')
+        bloodPressure = st.text_input('Enter blood pressure levels')
+        skinThickness = st.text_input('Enter skin thickness')
+        insulin = st.text_input('Enter insulin levels')
+        bmi = st.text_input('Enter BMI')
+        age = st.text_input('Enter your age')
+        submit_button = st.form_submit_button(label='Submit')
+
