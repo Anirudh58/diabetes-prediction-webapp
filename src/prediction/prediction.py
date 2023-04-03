@@ -17,7 +17,7 @@ def predict():
                 input_json['age']]
     final_features = [np.array(features)]
 
-    model_weight = pickle.load(open("./../../models/anirudh_03152023/rfc_model.pkl", 'rb'))
+    model_weight = pickle.load(open("./../../models/anirudh_03152023/rf_model.pkl", 'rb'))
     prediction = model_weight.predict_proba(final_features)
     output = prediction[0][1]
 
