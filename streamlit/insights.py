@@ -17,45 +17,15 @@ def run_ui():
     col1, col2 = st.columns([1,1])
 
     # TODO: Add interactive widgets here to show some insights based on user input.
-
-
     data = pd.read_csv('./data/diabetes.csv')
+
 
     # add bar chart to show the distribution of the diabetes positive and negative cases
     st.write(""" Ratio of diabetes positive and negative cases in the dataset: """)
     st.bar_chart(data['Outcome'].value_counts())
 
+    bar_chart_feature = st.selectbox("Select a feature", options=data.columns)
     # find out if the pregnancies has anything to do with the outcome
-    st.write(""" Number of pregnancies vs Outcome:  """)
-    st.bar_chart(data.groupby('Outcome')['Pregnancies'].mean())
-
-    # find out if the glucose has anything to do with the outcome
-    st.write(""" Glucose vs Outcome: """)
-    st.bar_chart(data.groupby('Outcome')['Glucose'].mean())
-
-    # find out if the blood pressure has anything to do with the outcome
-    st.write(""" Blood Pressure vs Outcome: """)
-    st.bar_chart(data.groupby('Outcome')['BloodPressure'].mean())
-
-    # find out if the skin thickness has anything to do with the outcome
-    st.write(""" Skin Thickness vs Outcome: """)
-    st.bar_chart(data.groupby('Outcome')['SkinThickness'].mean())
-
-    # find out if the insulin has anything to do with the outcome
-    st.write(""" Insulin vs Outcome: """)
-    st.bar_chart(data.groupby('Outcome')['Insulin'].mean())
-
-    # find out if the bmi has anything to do with the outcome
-    st.write(""" BMI vs Outcome: """)
-    st.bar_chart(data.groupby('Outcome')['BMI'].mean())
-
-    # find out if the diabetes pedigree function has anything to do with the outcome
-    st.write(""" Diabetes Pedigree Function vs Outcome: """)
-    st.bar_chart(data.groupby('Outcome')['DiabetesPedigreeFunction'].mean())
-
-    # find out if the age has anything to do with the outcome
-    st.write(""" Age vs Outcome: """)
-    st.bar_chart(data.groupby('Outcome')['Age'].mean())
-
-
-
+    bar_chart_heading = "Correlation between " +  bar_chart_feature + " vs Outcome:"
+    st.write(bar_chart_heading)
+    st.bar_chart(data.groupby('Outcome')[bar_chart_feature].mean())
