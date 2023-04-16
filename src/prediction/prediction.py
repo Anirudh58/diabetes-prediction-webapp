@@ -11,10 +11,13 @@ app = Flask(__name__)
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    input_json = request.get_json(force=True)
-    features = [input_json['pregnancies'], input_json['glucose'], input_json['bloodPressure'], input_json['skinThickness'],
-                input_json['insulin'], input_json['BMI'], input_json["diabetesPedigreeFunction"],
-                input_json['age']]
+
+    # get data
+    data = request.get_json(force=True)
+
+    features = [data['pregnancies'], data['glucose'], data['bloodPressure'], data['skinThickness'],
+                data['insulin'], data['BMI'], data["diabetesPedigreeFunction"],
+                data['age']]
     final_features = [np.array(features)]
 
     model_weight = pickle.load(open("./../../models/anirudh_03152023/rf_model.pkl", 'rb'))
