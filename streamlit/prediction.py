@@ -16,22 +16,30 @@ def run_ui():
     # define columns for the nodes and edges csv upload widgets
     col1, col2 = st.columns([1,1])
 
-    # "pregnancies": 0, 
-    # "glucose" : 168, 
-    # "bloodPressure": 72, 
-    # "skinThickness": 29, 
-    # "insulin": 0, 
-    # "BMI": 28.1, 
-    # "diabetesPedigreeFunction": 0.672,
-    # "age": 59
-    with st.form('My Form'):
-        name = st.text_input('Enter your name')
-        pregnancies = st.text_input('Enter number of pregnancies')
-        glucose = st.text_input('Enter glucose levels')
-        bloodPressure = st.text_input('Enter blood pressure levels')
-        skinThickness = st.text_input('Enter skin thickness')
-        insulin = st.text_input('Enter insulin levels')
-        bmi = st.text_input('Enter BMI')
-        age = st.text_input('Enter your age')
-        submit_button = st.form_submit_button(label='Submit')
+    # input section
+    with col1:
+
+        st.write("""
+            ## Input Fields
+            Please enter the values for the following fields:
+        """)
+
+        pregnancies = st.slider("Pregnancies", min_value=0, max_value=20)
+        glucose = st.number_input("Glucose")
+        bloodPressure = st.number_input("Blood Pressure")
+        skinThickness = st.number_input("Skin Thickness")
+        insulin = st.number_input("Insulin")
+        bmi = st.slider("BMI", min_value=5.0, max_value=60.0)
+        diabetesPedigreeFunction = st.number_input("Diabetes Pedigree Function")
+        age = st.slider("Age", min_value=1, max_value=100)
+
+    # output section
+    with col2:
+        st.write("""
+            ## Output
+            The probability of the person having diabetes is:
+        """)
+
+        # define the output field
+        output = st.empty()
 
