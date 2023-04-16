@@ -22,9 +22,8 @@ def predict():
 
     model_weight = pickle.load(open("./../../models/anirudh_03152023/rf_model.pkl", 'rb'))
     prediction = model_weight.predict_proba(final_features)
-    output = prediction[0][1]
-
-    return jsonify(output)
+    
+    return jsonify(prediction.tolist())
 
 if __name__ == "__main__":
     app.run(debug=True)
