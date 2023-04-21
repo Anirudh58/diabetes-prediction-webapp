@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 
 import streamlit as st
-import streamlit.components.v1 as components
 import matplotlib.pyplot as plt
+import altair as alt
 
 import json
 import requests
@@ -61,9 +61,7 @@ def run_ui():
     # input section
     with col1:
 
-        st.write("""
-            ## Input
-        """)
+        #st.markdown(f"<h3 style='text-align: center; color: white;'> INPUT </h3>", unsafe_allow_html=True)
 
         feature_list = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness',
                     'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
@@ -83,9 +81,7 @@ def run_ui():
 
     # output section
     with col2:
-        st.write("""
-            ## Output
-        """)
+        #st.markdown(f"<h3 style='text-align: center; color: white;'> OUTPUT </h3>", unsafe_allow_html=True)
 
         
         if submit_button:
@@ -105,7 +101,7 @@ def run_ui():
                 model_output = get_probability(model_dict)
                 
                 # display output in a table
-                st.table(pd.DataFrame(model_output, columns=['Chance of not having Diabetes', 'Chance of having Diabetes']))
+                st.table(pd.DataFrame(model_output, columns=['Diabetes Negative', 'Diabetes Positive']))
 
                 # add key to input dict
                 compare_dict = {}
@@ -118,23 +114,43 @@ def run_ui():
                 target_values = np.array([x[1] for x in compare_output])
 
                 # plot a scatter plot to compare the patient with the existing patients
-                st.write(f"### Comparison of patient's {compare_feature} with the population")
+                st.markdown(f"<h3 style='text-align: center; color: white;'> Comparison with the population </h3>", unsafe_allow_html=True)
 
-                # table explaining the plot
-                st.table(
-                    pd.DataFrame([
-                        ['Green', 'Patient without diabetes'], 
-                        ['Red', 'Patient with diabetes'], 
-                        ['Blue', 'Patient\'s value for the selected feature']
-                    ], columns=['Color', 'Description']))
+                # scatter plot with altair
+                df = pd.DataFrame({
+                    'patient_id': range(len(feature_values)),
+                    f'{compare_feature}': feature_values,
+                    'label': ['green' if x == 0 else 'red' for x in target_values]
+                })
 
-                fig = plt.figure(figsize=(10, 5))
-                plt.scatter(x=range(len(feature_values)), y=feature_values, c=['g' if x == 0 else 'r' for x in target_values], s=5)
-                plt.axhline(y=model_dict[compare_feature], color='b', linestyle='-', linewidth=1)
-                plt.xlabel("Patient ID")
-                plt.ylabel(compare_feature)
-                plt.title(f"Comparison of patient's {compare_feature} with the population")
-                st.pyplot(fig)
+                chart = alt.Chart(df).mark_circle(size=30).encode(
+                    x='patient_id',
+                    y=f'{compare_feature}',
+                    color=alt.condition(
+                        alt.datum.label == 'green',
+                        alt.value('green'),
+                        alt.value('red')
+                    )
+                ).properties(
+                    width=600,
+                    height=450
+                )
+
+                # add a horizontal line to show the patient's value for the selected feature
+                rule = alt.Chart(pd.DataFrame({f'{compare_feature}': [model_dict[compare_feature]]})).mark_rule(color='yellow').encode(y=f'{compare_feature}')
+
+                # add legend to show green for negative and red for positive and yellow for the patient's value
+                legend = alt.Chart(pd.DataFrame({
+                    'label': ['green', 'red', 'yellow'], 
+                    'value': ['Negative', 'Positive', f"Patient's {compare_feature}"]
+                    })).mark_point(size=100).encode(
+                    y=alt.Y('value', axis=alt.Axis(orient='right', title=None)),
+                    color=alt.Color('label', scale=None)
+                )
+                
+
+                st.altair_chart(chart + rule | legend, use_container_width=True)
+
                 
 
 
