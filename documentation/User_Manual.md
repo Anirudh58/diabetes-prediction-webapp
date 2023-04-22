@@ -1,6 +1,4 @@
-## Project Documentation
-
-### User Manual
+## User Manual
 
 - Pre-requisites: You have anaconda/miniconda installed and set up on your machine. Follow steps from [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) if you don't have it installed already.
 
