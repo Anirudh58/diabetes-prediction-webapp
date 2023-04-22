@@ -18,8 +18,6 @@ Note: You might have to follow different steps to install the environment depend
 
 ![Architecture](./Architecture_Diagram.png)
 
-# diabetes-prediction-webapp
-
 ## Project structure
 
 - streamlit: Contains the streamlit app - all the frontend code.
