@@ -9,3 +9,7 @@ __pycache__/*
 
 # ignore notebook checkpoints everywhere
 **/.ipynb_checkpoints/*
+
+# ignore data files
+data/Diabetes-Data
+data/diabetes_all_2016.csv
