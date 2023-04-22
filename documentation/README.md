@@ -1,10 +1,11 @@
-# diabetes-prediction-webapp
+## Project Documentation
 
-## Project setup
+### Project setup (for development)
 
 - Prereq: You have anaconda/miniconda installed and set up on your machine. Follow steps from [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) if you don't have it installed already.
 
 - Create the conda environment from the environment.yml file and activate it. 
+
 ```bash
 conda env create -f environment.yml
 conda activate gluco
@@ -12,33 +13,15 @@ conda activate gluco
 
 Note: You might have to follow different steps to install the environment depending on your OS. But just use the environment.yml file as a reference and install the packages manually if needed.
 
-## Project structure
-
-- streamlit: Contains the streamlit app - all the frontend code.
-- notebooks: Contains the notebooks used for data exploration and model training.
-- data: Dump all data files here.
-- src: Can add any helper functions and other reusable code here.
-
-## Usage
-
-### Start the flask server
-
-- Go into the src/prediction folder and start the flask server
-
-```bash
-cd src/prediction
-python prediction.py
-```
-
-### Start the streamlit app
-
 - Go to the root of the project and start the streamlit app
 
 ```bash
 streamlit run streamlit/main.py
 ```
 
-### Screens
+### User Manual (for usage)
+
+- Deployment was done with the help of streamlit. The final app can be accessed [here](https://anirudh58-diabetes-prediction-webapp-streamlitmain-35qwoi.streamlit.app/)
 
 - Prediction Screen:
     - The user must first enter some basic health information related to diabetes prediction.
@@ -57,3 +40,8 @@ streamlit run streamlit/main.py
     - Following is a sample screenshot of the insights screen:
 
 ![Insights Screen](/documentation/insights_screen.png)
+
+### Architecture Diagram
+
+![Architecture Diagram](/documentation/architecture_diagram.png)
+
