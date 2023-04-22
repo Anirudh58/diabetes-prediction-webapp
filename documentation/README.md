@@ -16,4 +16,4 @@ Note: You might have to follow different steps to install the environment depend
 ### Proposed Model Architecture
 
 
-![Architecture](../data/arch.png)
+![Architecture](./Architecture_Diagram.png)
