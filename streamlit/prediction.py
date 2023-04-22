@@ -34,7 +34,7 @@ model_list = {
     'rf': 'Random Forest',
     'gb': 'Gradient Boosting',
     'dt': 'Decision Tree',
-    #'lr': 'Logistic Regression',
+    'lr': 'Logistic Regression',
     'nn': 'Neural Network',
     'svm': 'Support Vector Machine'
 }
@@ -44,7 +44,7 @@ model_descriptions = {
     'rf': 'An ensemble learning method that constructs multiple decision trees and combines their results for accurate predictions.',
     'gb': 'A powerful machine learning technique that optimizes weak learners by minimizing the loss function using gradient descent.',
     'dt': 'A simple yet effective model that recursively splits data into subsets based on feature values, forming a tree structure.',
-    #'lr': 'A linear model for classification that predicts the probability of an event occurrence by fitting a logistic curve to the data.',
+    'lr': 'A linear model for classification that predicts the probability of an event occurrence by fitting a logistic curve to the data.',
     'nn': 'A highly flexible, interconnected network of artificial neurons capable of learning complex patterns and approximating any function.',
     'svm': 'A classification algorithm that finds the optimal hyperplane to separate classes by maximizing the margin between support vectors.'
 }
@@ -53,7 +53,7 @@ model_comments = {
     'rf': 'Test accuracy of 0.80. Not prone to overfitting. Strongly recommended for use.',
     'gb': 'Test accuracy of 0.72. It does not seem to be generalizing well.',
     'dt': 'Test accuracy of 0.79. Not prone to overfitting.',
-    #'lr': 'Test accuracy of 0.78. It does not seem to be generalizing well.',
+    'lr': 'Test accuracy of 0.78. It does not seem to be generalizing well.',
     'nn': 'Test accuracy of 0.72. Works well. Can be used for prediction',
     'svm': 'Test accuracy of 0.78. Works well. Can be used for prediction.'
 }
@@ -73,24 +73,30 @@ def get_probability(info_dict, models):
                 - 'svm': Support Vector Machine
     """
 
+    # feature list
     features = np.array([info_dict[feature] for feature in feature_list])
 
+    # loop through all the input models and store predictions
     predictions = []
-
     for model_name in models:
+
         # load the model
         model_path = os.path.join(model_folder_path, f"{model_name}_model.pkl")
         model = pickle.load(open(model_path, 'rb'))
 
         # for logistic regression, the inputs need to go through minmax scaler
-        if model=='lr':
+        if model_name=='lr':
             scaler_path = os.path.join(model_folder_path, f"{model_name}_scaler.pkl")
             scaler = pickle.load(open(scaler_path, 'rb'))
             scaled_features = scaler.transform(features.reshape(1, -1))
             prediction = model.predict_proba(scaled_features)[0][1]
+
+        # the classes are reversed for neural network
+        elif model_name == 'nn':
+            prediction = model.predict_proba(features.reshape(1, -1))[0][0]
+
         else:
             prediction = model.predict_proba(features.reshape(1, -1))[0][1]
-
 
         # append the prediction
         predictions.append(prediction)
