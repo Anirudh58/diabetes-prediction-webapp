@@ -13,4 +13,7 @@ conda activate gluco
 
 Note: You might have to follow different steps to install the environment depending on your OS. But just use the environment.yml file as a reference and install the packages manually if needed.
 
-![Architecture](https://drive.google.com/file/d/18mpf9_U3vKdVz7GnvruzLRuptBdJpXQ6/view?usp=share_link)
+### Proposed Model Architecture
+
+
+![Architecture](../data/arch.png)
